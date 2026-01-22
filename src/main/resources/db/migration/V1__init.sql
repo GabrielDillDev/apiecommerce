@@ -1,0 +1,24 @@
+CREATE TABLE users (
+  id BIGSERIAL PRIMARY KEY,
+  email VARCHAR(150) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  role VARCHAR(50) NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE category (
+  id BIGSERIAL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE product (
+  id BIGSERIAL PRIMARY KEY,
+  name VARCHAR(150) NOT NULL,
+  description TEXT,
+  price NUMERIC(10,2) NOT NULL,
+  category_id BIGINT NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+
+  CONSTRAINT fk_product_category
+    FOREIGN KEY (category_id) REFERENCES category(id)
+);
