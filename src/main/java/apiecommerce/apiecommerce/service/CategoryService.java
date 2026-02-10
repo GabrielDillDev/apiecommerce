@@ -27,7 +27,18 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
-    public void delete(Long id) {
+    public Category patch(Long id, Category data){
+        Category category = categoryRepository.findById(id).
+        orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
+
+        if(data.getName() != null){
+            category.setName(data.getName());
+        }
+
+        return categoryRepository.save(category);
+    }
+
+    public void deleteById(Long id) {
         categoryRepository.deleteById(id);
     }
 }

@@ -27,6 +27,25 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public User patch(Long id, User data){
+        User user = userRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("User não encontrado"));
+
+        if (data.getName() != null) {
+            user.setName(data.getName());
+        }
+
+        if (data.getEmail() != null) {
+            user.setEmail(data.getEmail());
+        }
+    
+        if (data.getPassword() != null) {
+            user.setPassword(data.getPassword());
+        }
+
+        return userRepository.save(user);
+    }
+
     public void deleteById(Long id){
         userRepository.deleteById(id);
     }
