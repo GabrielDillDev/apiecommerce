@@ -1,7 +1,10 @@
 package apiecommerce.apiecommerce.controller;
 
+import apiecommerce.apiecommerce.dto.UpdatePasswordRequest;
 import apiecommerce.apiecommerce.model.User;
 import apiecommerce.apiecommerce.service.UserService;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,20 +30,18 @@ public class UserController {
         return userService.findById(id);
     }
 
-    @PostMapping
-    public User save(@RequestBody User user){
-        return userService.save(user);
-    }
-
-    @PutMapping("/{id}")
-    public User update(@PathVariable Long id, @RequestBody User user){
-        user.setId(id);
-        return userService.save(user);
-    }
-
     @PatchMapping("/{id}")
     public User patch(@PathVariable Long id, @RequestBody User user){
         return userService.patch(id, user);
+    }
+
+    @PatchMapping("/{id}/password")
+    public ResponseEntity<Void> updatePassword(
+        @PathVariable Long id, 
+        @RequestBody UpdatePasswordRequest request){
+            
+            userService.updatePassword(id, request.getPassword());
+            return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
